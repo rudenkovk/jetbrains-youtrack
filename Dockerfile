@@ -19,19 +19,19 @@ ENV APP_USER=$APP_NAME \
     APP_DIR=$APP_PREFIX/$APP_NAME \
     APP_HOME=/var/lib/$APP_NAME
 
-RUN useradd --system --user-group --uid $APP_UID --home $APP_HOME $APP_USER \
-    && mkdir $APP_HOME \
-    && chown -R $APP_USER:$APP_USER $APP_HOME
+# RUN useradd --system --user-group --uid $APP_UID --home $APP_HOME $APP_USER \
+#     && mkdir $APP_HOME \
+#     && chown -R $APP_USER:$APP_USER $APP_HOME
 
 WORKDIR $APP_PREFIX
 
 RUN wget -qO ${APP_NAME}.zip https://download.jetbrains.com/charisma/youtrack-${YOUTRACK_VERSION}.${YOUTRACK_BUILD}.zip && \
     unzip -q ${APP_NAME}.zip -x */internal/java/* && \
     mv youtrack-${YOUTRACK_BUILD} $APP_NAME && \
-    chown -R $APP_USER:$APP_USER $APP_DIR && \
+    # chown -R $APP_USER:$APP_USER $APP_DIR && \
     rm ${APP_NAME}.zip
 
-USER $APP_USER
+# USER $APP_USER
 WORKDIR $APP_DIR
 
 RUN bin/youtrack.sh configure \
